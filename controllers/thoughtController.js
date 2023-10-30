@@ -12,7 +12,7 @@ module.exports = {
     },
 
 
- getOneThought({ params }, res) {
+  getThoughtById({ params }, res) {
     Thought.findOne({ _id: params.id })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
@@ -25,7 +25,7 @@ module.exports = {
             console.log(err);
             res.sendStatus(400);
         });
- },
+    },
 
  createThought({ body }, res) {
     Thought.create(body)
