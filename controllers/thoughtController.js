@@ -13,7 +13,7 @@ module.exports = {
 
 
   getThoughtById({ params }, res) {
-    Thought.findOne({ _id: params.id })
+    Thought.findOne({ _id: params.thoughtId })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id!' });
@@ -47,7 +47,7 @@ module.exports = {
  },
 
  updateThought({ params, body }, res) {
-    Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+    Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id!' });
@@ -58,7 +58,7 @@ module.exports = {
         .catch(err => res.json(err));
     },
  deleteThought({ params }, res) {
-    Thought.findOneAndDelete({ _id: params.id })
+    Thought.findOneAndDelete({ _id: params.thoughtId })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id!' });
@@ -66,7 +66,7 @@ module.exports = {
             }
             return User.findOneAndUpdate(
                 { username: dbThoughtData.username },
-                { $pull: { thoughts: params.id } },
+                { $pull: { thoughts: params.thoughtId } },
                 { new: true }
             );
         })
@@ -82,7 +82,7 @@ module.exports = {
 
  addReaction(req, res) {
     Thought.findOneAndUpdate(
-        { _id: req.params.id },
+        { _id: req.params.thoughtId },
         { $addToSet: { reactions: req.body } },
         { new: true, runValidators: true }
     )
@@ -97,7 +97,7 @@ module.exports = {
     },
     removeReaction(req, res) {
         Thought.findOneAndUpdate(
-            { _id: req.params.id },
+            { _id: req.params.thoughtId },
             { $pull: { reactions: { reactionId: req.params.reactionId } } },
             { new: true, runValidators: true }
         )
