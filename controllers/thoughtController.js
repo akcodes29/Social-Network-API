@@ -27,26 +27,29 @@ module.exports = {
         });
     },
 
- createThought({ body }, res) {
-    Thought.create(body)
-        .then(dbThoughtData => {
+ createThought(req, res) {
+    Thought.create(req.body)
+        .then((thought) => {
             return User.findOneAndUpdate(
-                { _id: body.userId },
-                { $push: { thoughts: dbThoughtData._id } },
+                { _id: req.body.userId },
+                { $push: { thoughts: thought._id } },
                 { new: true }
             );
         })
-        .then(dbUserData => {
-            if (!dbUserData) {
-                res.status(404).json({ message: 'No user found with this id!' });
-                return;
-            }
-            res.json(dbUserData);
-        })
-        .catch(err => res.json(err));
+        .then((user)=> 
+            !user ? res.status(404).json({message: 'No user found with this id!'}) 
+            : res.json({
+                updatedUser: user,
+                message: 'Thought added to user successfully!'
+            })
+        )
+        .catch((err) => {
+            console.log(err);
+            return res.status(400).json(err);
+        });
  },
 
- updateThought({ params, body }, res) {
+ updateThought(req, res) {
     Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true })
         .then(dbThoughtData => {
             if (!dbThoughtData) {

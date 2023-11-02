@@ -90,7 +90,7 @@ module.exports = {
         User.findOneAndUpdate(
             { _id: req.params.userId },
             { $pull: { friends: req.params.friendId } },
-            { new: true }
+            { runValidators: true, new: true }
         )
             .then((user) => {
                 if (!user) {
