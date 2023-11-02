@@ -1,3 +1,5 @@
+// Seeds the database with sample data - Not really necessary for this assignment, but I kept it anyway
+
 require('dotenv').config({ path: '../.env'});
 const connection = require('../config/connection');
 const { User, Thought, Reaction } = require('../models');

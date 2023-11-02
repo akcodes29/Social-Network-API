@@ -279,3 +279,12 @@ You are required to submit BOTH of the following for review:
 * The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
 
 ---
+
+## Video Demo
+
+https://drive.google.com/file/d/14jD_zdAkQacptUnWzDavtAr9N_vA2MHY/view
+
+##
+
+Github: https://github.com/akcodes29/Social-Network-API
+

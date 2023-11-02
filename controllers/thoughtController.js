@@ -83,7 +83,7 @@ module.exports = {
         })
         .catch(err => res.json(err));
     },
-
+// /api/thoughts/:thoughtId/reactions
  addReaction(req, res) {
     Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
@@ -100,7 +100,7 @@ module.exports = {
         .catch(err => res.json(err));
     },
 
-    // '/:thoughtId/reactions/:reactionId'
+    // /api/thoughts/:thoughtId/reactions/:reactionId
     removeReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },

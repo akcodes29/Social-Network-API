@@ -69,7 +69,7 @@ module.exports = {
             return res.status(400).json(err);
         });
     },
-
+// /api/users/:userId/friends/:friendId
     addFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
