@@ -88,7 +88,7 @@ module.exports = {
     Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $addToSet: { reactions: req.body } },
-        { new: true, runValidators: true }
+        { new: true, runValidators: false }
     )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
@@ -99,14 +99,26 @@ module.exports = {
         })
         .catch(err => res.json(err));
     },
+
+    // '/:thoughtId/reactions/:reactionId'
     removeReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $pull: { reactions: { reactionId: req.params.reactionId } } },
-            { new: true, runValidators: true }
+            { new: true, runValidators: false }
         )
-            .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(err => res.json(err));
+        .then((thought) =>
+        !thought
+            ? res.status(404).json({ message: 'No thought with this id found' })
+            : res.json({
+                updatedThought: thought,
+                message: 'Reaction deleted and removed from thought'
+            })
+    )
+    .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+    });
  }
 
 };
