@@ -50,7 +50,7 @@ module.exports = {
  },
 
  updateThought(req, res) {
-    Thought.findOneAndUpdate({ _id: params.thoughtId }, body, { new: true, runValidators: true })
+    Thought.findOneAndUpdate({ _id: req.params.thoughtId }, {$set: req.body}, { new: true, runValidators: true })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id!' });
@@ -60,6 +60,7 @@ module.exports = {
         })
         .catch(err => res.json(err));
     },
+
  deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.thoughtId })
         .then(dbThoughtData => {
